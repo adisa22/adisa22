@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy Jekyll Site
 
 on:
   push:
@@ -7,22 +7,35 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-22.04  # Specify the Ubuntu version
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          node-version: '16'  # Specify the Node.js version
+          ruby-version: '3.1'  # Use the Ruby version specified in your Gemfile or .ruby-version file
+
+      - name: Cache gems
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          gem install bundler
+          bundle install
 
-      - name: Build project
-        run: npm run build
+      - name: Build Jekyll site
+        run: bundle exec jekyll build -d _site
 
-      - name: Deploy
-        run: npm run deploy
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
