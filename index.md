@@ -15,3 +15,6 @@ My name is **Adisa Olarenwaju Oluwaseun**.
 - Machine Learning
 - Deep Learning
 - Transformer Models
+
+## About Me
+Learn more about me on my [About page](/about).
