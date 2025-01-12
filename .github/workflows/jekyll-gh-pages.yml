@@ -1,4 +1,4 @@
-name: Build and Deploy Jekyll Site
+name: Build and Deploy
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # Specify the Ubuntu version
 
     steps:
       - name: Checkout code
