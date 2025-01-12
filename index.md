@@ -1,7 +1,7 @@
 ---
 layout: default
+title: About
 ---
 
-# Welcome to My Dinky Page
-
-This is a sample homepage using the Dinky theme.
+# About Me
+This is the about page.
